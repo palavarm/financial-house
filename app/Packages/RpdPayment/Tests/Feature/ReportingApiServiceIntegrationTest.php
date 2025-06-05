@@ -9,7 +9,6 @@ beforeEach(function () {
 });
 
 test('it makes a real API call to get token indirectly', function () {
-    // This will be triggered implicitly
     $response = $this->service->transactionReport([
         'fromDate' => now()->subDays(7)->toDateString(),
         'toDate' => now()->toDateString(),
@@ -50,4 +49,3 @@ test('it makes a real API call to transaction list without page', function () {
     expect($response)->toBeArray();
     expect($response)->toHaveKey('data');
 });
-

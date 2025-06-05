@@ -15,17 +15,24 @@ class ClientDetails extends Component
     public bool $isLoading = false;
     private ?Carbon $lastUpdated = null;
 
+    /**
+     * @param string $transactionId
+     * @return void
+     */
     public function mount(string $transactionId): void
     {
         $this->transactionId = $transactionId;
         $this->loadClient();
     }
 
+    /**
+     * @return void
+     */
     public function loadClient(): void
     {
         $now = now();
         if ($this->lastUpdated && $now->diffInMilliseconds($this->lastUpdated) < 100) {
-            return; // debounce threshold
+            return;
         }
 
         $this->lastUpdated = $now;
@@ -38,6 +45,9 @@ class ClientDetails extends Component
         $this->isLoading = false;
     }
 
+    /**
+     * @return mixed
+     */
     public function render()
     {
         return view(self::VIEW, [

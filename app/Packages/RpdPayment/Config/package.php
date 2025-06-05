@@ -1,6 +1,7 @@
 <?php
 
 return [
+    // API CREDENTIALS
     'email' => env('API_EMAIL'),
     'password' => env('API_PASSWORD'),
     'base_url' => env('API_BASE_URL'),

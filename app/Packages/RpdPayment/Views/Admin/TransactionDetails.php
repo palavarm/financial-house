@@ -15,24 +15,24 @@ class TransactionDetails extends Component
     public bool $isLoading = false;
     private ?Carbon $lastUpdated = null;
 
+    /**
+     * @param string $transactionId
+     * @return void
+     */
     public function mount(string $transactionId): void
     {
         $this->transactionId = $transactionId;
         $this->loadTransaction();
     }
 
-    public function updated($propertyName): void
-    {
-        if (in_array($propertyName, ['fromDate', 'toDate'])) {
-            $this->loadTransaction();
-        }
-    }
-
+    /**
+     * @return void
+     */
     public function loadTransaction(): void
     {
         $now = now();
         if ($this->lastUpdated && $now->diffInMilliseconds($this->lastUpdated) < 100) {
-            return; // debounce threshold
+            return;
         }
 
         $this->lastUpdated = $now;
@@ -45,7 +45,10 @@ class TransactionDetails extends Component
         $this->isLoading = false;
     }
 
-    public function render()
+    /**
+     * @return mixed
+     */
+    public function render(): mixed
     {
         return view(self::VIEW, [
             'title' => 'Transaction Details - #' . $this->transactionId,

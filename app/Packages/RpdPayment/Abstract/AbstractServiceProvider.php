@@ -16,10 +16,12 @@ abstract class AbstractServiceProvider extends BaseServiceProvider
      */
     public function boot(): void
     {
+        // Load migrations from package directory
         if (File::exists($this->path . '/../Database/Migrations')) {
             $this->loadMigrationsFrom($this->path . '/../Database/Migrations');
         }
 
+        // Load routes from package directory
         if (File::exists($this->path . '/../Routes/web.php')) {
             $this->loadRoutesFrom($this->path . '/../Routes/web.php');
         }

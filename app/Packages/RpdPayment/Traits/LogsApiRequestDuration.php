@@ -7,6 +7,12 @@ use RuntimeException;
 
 trait LogsApiRequestDuration
 {
+    /**
+     * @param string $label
+     * @param callable $callback
+     * @param int $warnThresholdMs
+     * @return mixed
+     */
     public function requestWithTiming(string $label, callable $callback, int $warnThresholdMs = 1000): mixed
     {
         $start = microtime(true);

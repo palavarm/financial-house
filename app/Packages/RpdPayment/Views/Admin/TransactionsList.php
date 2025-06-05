@@ -5,6 +5,8 @@ namespace App\Packages\RpdPayment\Views\Admin;
 use App\Packages\RpdPayment\Facades\ReportingApiService;
 use Illuminate\Support\Carbon;
 use Livewire\Component;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class TransactionsList extends Component
 {
@@ -38,22 +40,30 @@ class TransactionsList extends Component
     private ?int $prevPage = null;
     private ?int $nextPage = null;
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function mount(): void
     {
         $this->loadTransactions();
     }
 
+    /**
+     * @param array|null $params
+     * @return void
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function loadTransactions(?array $params = null): void
     {
         $now = now();
         if ($this->lastUpdated && $now->diffInMilliseconds($this->lastUpdated) < 100) {
-            return; // debounce threshold
+            return;
         }
 
         $this->lastUpdated = $now;
         $this->isLoading = true;
-
-        //dd($params);
 
         $this->fromDate = $params['fromDate'] ?? (request()->get('fromDate') ?? now()->subMonths(6)->toDateString());
         $this->toDate = $params['toDate'] ?? (request()->get('toDate') ?? now()->toDateString());
@@ -97,7 +107,10 @@ class TransactionsList extends Component
         $this->isLoading = false;
     }
 
-    public function render()
+    /**
+     * @return mixed
+     */
+    public function render(): mixed
     {
         return view(self::VIEW, [
             'title' => 'Transaction List',

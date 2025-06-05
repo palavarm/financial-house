@@ -25,6 +25,9 @@ class ReportingApiService
         $this->tokenExpireDuration = config('rpd_payment.token_expire_duration');
     }
 
+    /**
+     * @return string
+     */
     protected function getToken(): string
     {
         return Cache::remember('reporting_api_token', now()->addMinutes($this->tokenExpireDuration), function () {
@@ -41,6 +44,9 @@ class ReportingApiService
         });
     }
 
+    /**
+     * @return PendingRequest
+     */
     protected function request(): PendingRequest
     {
         return Http::withHeaders([
@@ -55,6 +61,10 @@ class ReportingApiService
             });
     }
 
+    /**
+     * @param array $params
+     * @return array
+     */
     public function transactionReport(array $params): array
     {
         return $this->requestWithTiming('Transaction Report', function () use ($params) {
@@ -64,6 +74,11 @@ class ReportingApiService
         }, 1500);
     }
 
+    /**
+     * @param array $params
+     * @param int|null $page
+     * @return array
+     */
     public function transactionList(array $params, ?int $page = null): array
     {
         $requestPath = 'transaction/list';
@@ -79,6 +94,10 @@ class ReportingApiService
         }, 1500);
     }
 
+    /**
+     * @param string $transactionId
+     * @return array
+     */
     public function getTransaction(string $transactionId): array
     {
         return $this->requestWithTiming('Transaction Detail', function () use ($transactionId) {
@@ -90,6 +109,10 @@ class ReportingApiService
         }, 500);
     }
 
+    /**
+     * @param string $transactionId
+     * @return array
+     */
     public function getClient(string $transactionId): array
     {
         return $this->requestWithTiming('Client', function () use ($transactionId) {

@@ -18,6 +18,9 @@ class TransactionsReport extends Component
     public bool $isLoading = false;
     private ?Carbon $lastUpdated = null;
 
+    /**
+     * @return void
+     */
     public function mount(): void
     {
         $this->fromDate = now()->subMonths(6)->toDateString();
@@ -25,11 +28,14 @@ class TransactionsReport extends Component
         $this->loadReports();
     }
 
+    /**
+     * @return void
+     */
     public function loadReports(): void
     {
         $now = now();
         if ($this->lastUpdated && $now->diffInMilliseconds($this->lastUpdated) < 100) {
-            return; // debounce threshold
+            return;
         }
 
         $this->lastUpdated = $now;
@@ -55,7 +61,10 @@ class TransactionsReport extends Component
         $this->isLoading = false;
     }
 
-    public function render()
+    /**
+     * @return mixed
+     */
+    public function render(): mixed
     {
         return view(self::VIEW, [
             'reportData' => [
