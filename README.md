@@ -22,3 +22,7 @@ I use below endpoints in my task
 - In transaction list page you can go to transaction details page with clicking View links
 - In transaction details page you can to the client details by clicking See Client link
 - I also tried to use filters like customerEmail in transaction list page, but it didn't work and I removed them; I tried to send the filter params as in the API documentation
+
+## Notes
+- You can reach unit and feature tests under app\Packages\RpdPayment\Tests
+- I used Pest for testing
